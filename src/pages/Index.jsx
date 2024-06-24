@@ -1,4 +1,6 @@
 import React from 'react';
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Progress } from "@/components/ui/progress";
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 
 const data = [
@@ -16,10 +18,30 @@ const data = [
   { name: 'Dec', revenue: 3490 },
 ];
 
+const metrics = [
+  { title: 'Total Sales', value: '$12,000', progress: 75 },
+  { title: 'New Customers', value: '1,200', progress: 50 },
+  { title: 'Pending Orders', value: '300', progress: 30 },
+];
+
 function Index() {
   return (
     <div className="p-4">
-      <h1 className="text-2xl font-bold mb-4">Revenue Overview</h1>
+      <h1 className="text-2xl font-bold mb-4">Dashboard Overview</h1>
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
+        {metrics.map((metric, index) => (
+          <Card key={index}>
+            <CardHeader>
+              <CardTitle>{metric.title}</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <p className="text-lg font-semibold">{metric.value}</p>
+              <Progress value={metric.progress} />
+            </CardContent>
+          </Card>
+        ))}
+      </div>
+      <h2 className="text-xl font-bold mb-4">Revenue Overview</h2>
       <ResponsiveContainer width="100%" height={400}>
         <LineChart
           data={data}
